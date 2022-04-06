@@ -22,6 +22,12 @@ private:
     QTimer* m_timer;
     gpio* m_gpio;
 
+    QLabel* m_countLabel;
+    int m_counter= 0;
+
+
+
+
 };
 
 #endif // WIDGET_H

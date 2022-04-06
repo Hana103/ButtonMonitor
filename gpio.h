@@ -13,12 +13,16 @@ public:
     void set(unsigned int pattern);
     bool get(int pin);
 
-signals:
+    bool edgeDetect(int state, bool edge, int nr); // falling || rising
 
-public slots:
 
 private:
     int m_handle;
+
+    QList<bool> m_oldstates={true, true, true}; // buttons=H
+
+
+
 };
 
 #endif // GPIO_H

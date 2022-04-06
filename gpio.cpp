@@ -25,6 +25,7 @@ gpio::~gpio()
 }
 
 // Write to pins
+
 void gpio::set(int pin, bool value)
 {
     lgGpioWrite(m_handle, pin, value);
@@ -45,4 +46,27 @@ void gpio::set(unsigned int pattern)
 bool gpio::get(int pin)
 {
     return lgGpioRead(m_handle, pin);
+}
+
+bool gpio::edgeDetect(int state, bool edge, int nr)
+{
+    // state: when button pressed=true
+    // state idle: false because of the inversion at the beginning
+
+    if(m_oldstates[nr]==state)  //state= true
+    {
+
+        if(state==edge)     //edge=true
+        {
+            m_oldstates[nr]= !state;    //m_oldstates=false
+           return true;
+        }
+        m_oldstates[nr]= !state;
+        return false;
+    }
+    else
+    {
+        m_oldstates[nr]= !state;    // state=false
+        return false;
+    }
 }
