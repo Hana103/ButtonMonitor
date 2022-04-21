@@ -2,6 +2,7 @@
 #include "widget.h"
 #include <QGridLayout>
 #include <QDebug>
+#include <QRandomGenerator>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -16,6 +17,8 @@ Widget::Widget(QWidget *parent)
     // Labels for input pins / buttons
 
     int column = 0;
+
+
     for (auto pin : BUTTONS)
     {
         // pin numbers
@@ -58,28 +61,37 @@ Widget::~Widget()
 void Widget::updateButtonState()
 {
     int n = 0;
+
     for (auto pin : BUTTONS)
     {
-        int state = !m_gpio->get(pin);  //inverts the value of the button (at the beginning all the buttons are HIGH)
+        int state = !m_gpio->get(pin);  // inverts the value of the button (at the beginning all the buttons are HIGH)
 
         if(m_gpio->edgeDetect(state,true,n))
         {
             if(n==0)
             {
-                m_counter--;    // GPIO22 --
+                m_counter--;   // GPIO22-> cnt--
+                m_number= qrand()%((6+1)-0)+0;
+                qDebug() <<m_number;
+                m_gpio->set(m_number);
             }
             else if(n==1)
             {
                 m_counter=0;    // GPIO27-> cnt=0
+                m_number= qrand()%((6+1)-0)+0;
+                qDebug() <<m_number;
+                m_gpio->set(m_number);
             }
-            else if(n==2)       // GPIO17 ++
+            else if(n==2)
             {
-                m_counter++;
+                m_counter++;    // GPIO17-> cnt++
+                m_number= qrand()%((6+1)-0)+0;
+                qDebug() <<m_number;
+                m_gpio->set(m_number);
             }
-
         }
-        m_countLabel->setText("Counter: "+ QString::number(m_counter));
 
+        m_countLabel->setText("Counter: "+ QString::number(m_counter));
         m_input_display[n++]->setText(QString::number(state));
     }
 }

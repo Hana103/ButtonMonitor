@@ -19,10 +19,7 @@ public:
 private:
     int m_handle;
 
-    QList<bool> m_oldstates={true, true, true}; // buttons=H
-
-
-
+    QList<bool> m_oldstates={true, true, true}; // buttons= H
 };
 
 #endif // GPIO_H

@@ -24,9 +24,7 @@ private:
 
     QLabel* m_countLabel;
     int m_counter= 0;
-
-
-
+    unsigned int m_number;
 
 };
 
